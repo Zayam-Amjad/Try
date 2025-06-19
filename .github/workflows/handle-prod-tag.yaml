@@ -3,7 +3,7 @@ name: Handle prod* Tag
 on:
   push:
     tags:
-      - "prod*"
+      - 'prod*'
 
 jobs:
   manage-prod-tag:
@@ -15,8 +15,8 @@ jobs:
 
       - name: Set up Git user
         run: |
-          git config --global user.name "Zayam Amjad"
-          git config --global user.email "you@example.com"
+          git config --global user.name "Zayam-Amjad"
+          git config --global user.email "zayam.amjad@dubizzlelabs.com"
 
       - name: Delete existing prod* tag from remote (if exists)
         run: |
@@ -31,6 +31,6 @@ jobs:
 
       - name: Re-push prod* tag to remote
         run: |
-          TAG_NAME=$(git describe --tags --abbrev=0)
-          git tag -f $TAG_NAME
-          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Zayam-Amjad/Try.git $TAG_NAME --force
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          git tag -f "$TAG_NAME"
+          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Zayam-Amjad/Try.git "$TAG_NAME" --force
