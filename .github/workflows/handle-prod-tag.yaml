@@ -1,12 +1,9 @@
-mkdir -p .github/workflows
-
-cat <<'EOF' > .github/workflows/handle-prod-tag.yaml
 name: Handle prod* Tag
 
 on:
   push:
     tags:
-      - 'prod*'
+      - "prod*"
 
 jobs:
   manage-prod-tag:
@@ -24,10 +21,10 @@ jobs:
       - name: Delete existing prod* tag from remote (if exists)
         run: |
           TAG_NAME=$(git describe --tags --abbrev=0)
-          echo "Detected tag: \$TAG_NAME"
-          if git ls-remote --tags origin | grep -q "refs/tags/\$TAG_NAME"; then
-            echo "Deleting remote tag: \$TAG_NAME"
-            git push https://x-access-token:\${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Zayam-Amjad/Try.git :refs/tags/\$TAG_NAME
+          echo "Detected tag: $TAG_NAME"
+          if git ls-remote --tags origin | grep -q "refs/tags/$TAG_NAME"; then
+            echo "Deleting remote tag: $TAG_NAME"
+            git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Zayam-Amjad/Try.git :refs/tags/$TAG_NAME
           else
             echo "No existing tag to delete."
           fi
@@ -35,7 +32,5 @@ jobs:
       - name: Re-push prod* tag to remote
         run: |
           TAG_NAME=$(git describe --tags --abbrev=0)
-          git tag -f \$TAG_NAME
-          git push https://x-access-token:\${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Zayam-Amjad/Try.git \$TAG_NAME --force
-
-EOF
+          git tag -f $TAG_NAME
+          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Zayam-Amjad/Try.git $TAG_NAME --force
