@@ -9,6 +9,9 @@ jobs:
   manage-prod-tag:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  # This is essential for tag deletion and pushing
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,19 +21,24 @@ jobs:
           git config --global user.name "Zayam-Amjad"
           git config --global user.email "zayam.amjad@dubizzlelabs.com"
 
-      - name: Delete existing prod* tag from remote (if exists)
+      - name: Extract tag name
+        id: extract_tag
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Delete tag from remote if exists
         run: |
-          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          TAG_NAME="${{ steps.extract_tag.outputs.tag }}"
           echo "Detected tag: $TAG_NAME"
           if git ls-remote --tags origin | grep -q "refs/tags/$TAG_NAME"; then
             echo "Deleting remote tag: $TAG_NAME"
-            git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Zayam-Amjad/Try.git :refs/tags/$TAG_NAME
+            git push origin :refs/tags/$TAG_NAME
           else
-            echo "No existing tag to delete."
+            echo "No existing remote tag to delete."
           fi
 
-      - name: Re-push prod* tag to remote
+      - name: Re-push tag to remote
         run: |
-          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          TAG_NAME="${{ steps.extract_tag.outputs.tag }}"
+          echo "Re-pushing tag: $TAG_NAME"
           git tag -f "$TAG_NAME"
-          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Zayam-Amjad/Try.git "$TAG_NAME" --force
+          git push origin "$TAG_NAME" --force
