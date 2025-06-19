@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B9EB371F2E0425BA0082EBB0 /* handle-prod-tag.yaml in Resources */ = {isa = PBXBuildFile; fileRef = B9EB371E2E0425BA0082EBB0 /* handle-prod-tag.yaml */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B9EB37012E0423F50082EBB0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		B9EB36EA2E0423F30082EBB0 /* Final_testing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Final_testing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9EB37002E0423F50082EBB0 /* Final_testingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Final_testingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9EB370A2E0423F50082EBB0 /* Final_testingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Final_testingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9EB371E2E0425BA0082EBB0 /* handle-prod-tag.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "handle-prod-tag.yaml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +93,7 @@
 		B9EB36E12E0423F30082EBB0 = {
 			isa = PBXGroup;
 			children = (
+				B9EB371E2E0425BA0082EBB0 /* handle-prod-tag.yaml */,
 				B9EB36EC2E0423F30082EBB0 /* Final_testing */,
 				B9EB37032E0423F50082EBB0 /* Final_testingTests */,
 				B9EB370D2E0423F50082EBB0 /* Final_testingUITests */,
@@ -225,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9EB371F2E0425BA0082EBB0 /* handle-prod-tag.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
