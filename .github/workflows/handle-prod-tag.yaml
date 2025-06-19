@@ -20,7 +20,7 @@ jobs:
 
       - name: Delete existing prod* tag from remote (if exists)
         run: |
-          TAG_NAME=$(git describe --tags --abbrev=0)
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
           echo "Detected tag: $TAG_NAME"
           if git ls-remote --tags origin | grep -q "refs/tags/$TAG_NAME"; then
             echo "Deleting remote tag: $TAG_NAME"
