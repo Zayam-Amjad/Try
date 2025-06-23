@@ -1,24 +1,30 @@
-name: Handle prod* Tag
+name: Handle prod Tag from Manual Input
 
 on:
-  push:
-    tags:
-      - 'prod*'
+  workflow_dispatch:
+    inputs:
+      release_input:
+        description: 'Release string in the format: release-olx-app 1.2.3'
+        required: true
+        type: string
 
 jobs:
   manage-prod-tag:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # This is essential for tag deletion and pushing
+      contents: write  # Required to delete and push tags
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Extract tag name
+      - name: Extract tag name from input
         id: extract_tag
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        run: |
+          echo "Input: ${{ github.event.inputs.release_input }}"
+          TAG_NAME=$(echo "${{ github.event.inputs.release_input }}" | awk '{print $2}')
+          echo "tag=$TAG_NAME" >> $GITHUB_OUTPUT
 
       - name: Delete tag from remote if exists
         run: |
